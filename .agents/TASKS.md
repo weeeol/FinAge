@@ -1,0 +1,106 @@
+# FinPilot Implementation Tasks
+
+Antigravity owns implementation. Tasks are ordered by dependency but can be assigned independently once prerequisites are complete. Every implementation task must preserve the documented API and data model or update the relevant architecture record first.
+
+## P0: Required for demo
+
+### P0-01 Project setup
+- **Description:** Create Vite React frontend, FastAPI backend package, dependency manifests, environment example, and local run commands.
+- **Files likely affected:** `frontend/`, `backend/`, `README.md`, `docker-compose.yml`
+- **Dependencies:** None
+- **Acceptance criteria:** Frontend and backend start locally; `/health` responds; no secrets committed.
+
+### P0-02 Database and seed data
+- **Description:** Implement SQLAlchemy models, SQLite initialization, default user/categories, and session management for the schema in `DATA_MODEL.md`.
+- **Files likely affected:** `backend/app/db/`, `backend/app/models/`, `backend/app/core/`
+- **Dependencies:** P0-01
+- **Acceptance criteria:** Database initializes reproducibly; relationships and unique constraints work; seed data supports a blank demo.
+
+### P0-03 Transaction import and normalization
+- **Description:** Accept CSV/XLSX uploads, map common columns, normalize signs/dates/descriptions, reject unsafe or unusable files, and persist transactions.
+- **Files likely affected:** `backend/app/api/upload.py`, `backend/app/processing/`, `backend/app/services/import_service.py`
+- **Dependencies:** P0-02
+- **Acceptance criteria:** Sample statement imports with counts and warnings; invalid rows are handled transparently; duplicate imports do not blindly duplicate rows.
+
+### P0-04 Categorization
+- **Description:** Add deterministic category rules with an `Other` fallback and assign categories during import.
+- **Files likely affected:** `backend/app/processing/categorizer.py`, `backend/app/services/import_service.py`, `backend/tests/`
+- **Dependencies:** P0-02, P0-03
+- **Acceptance criteria:** Common merchants map to stable categories; unmatched transactions remain visible; categorization is unit tested.
+
+### P0-05 Monthly and category analytics
+- **Description:** Implement backend calculations for income, expenses, net, monthly trends, category totals, and summary endpoints.
+- **Files likely affected:** `backend/app/services/analytics_service.py`, `backend/app/api/analytics.py`, `backend/app/schemas/`
+- **Dependencies:** P0-02, P0-03, P0-04
+- **Acceptance criteria:** Totals use integer arithmetic; empty periods return valid zero-valued responses; API responses match `API_CONTRACT.md`.
+
+### P0-06 Recurring payment detection
+- **Description:** Detect repeated merchant/amount patterns, estimate frequency and next date, and expose upcoming obligations.
+- **Files likely affected:** `backend/app/services/recurring_service.py`, `backend/app/api/analytics.py`
+- **Dependencies:** P0-03, P0-05
+- **Acceptance criteria:** Monthly repeats are detected from fixture data with confidence; irregular transactions are not presented as certain subscriptions.
+
+### P0-07 Dashboard
+- **Description:** Build the primary responsive dashboard with upload, summary cards, monthly chart, category chart, recurring obligations, and clear loading/error/empty states.
+- **Files likely affected:** `frontend/src/`
+- **Dependencies:** P0-01, P0-05, P0-06
+- **Acceptance criteria:** A new user can upload a statement and see refreshed totals and charts; mobile layout remains usable; browser never calculates authoritative totals.
+
+### P0-08 Grounded AI Q&A
+- **Description:** Build a structured-context AI adapter and `/api/ask`, with optional API-key behavior, refusal boundaries, and source facts in responses.
+- **Files likely affected:** `backend/app/ai/`, `backend/app/services/qa_service.py`, `backend/app/api/ask.py`, `frontend/src/features/assistant/`
+- **Dependencies:** P0-05, P0-06
+- **Acceptance criteria:** Questions answer from supplied aggregates; missing data is acknowledged; no investment recommendations; endpoint works in controlled unavailable mode without a key.
+
+## P1: Important
+
+### P1-01 Text PDF parsing
+- **Description:** Extract tables/text from text-based PDFs with PyMuPDF and feed the same normalization pipeline.
+- **Files likely affected:** `backend/app/processing/pdf_parser.py`, `backend/app/services/import_service.py`
+- **Dependencies:** P0-03
+- **Acceptance criteria:** A representative text PDF imports or returns a precise unsupported-layout warning; image-only PDFs do not silently produce bad data.
+
+### P1-02 Budgets
+- **Description:** Add budget CRUD, month/category comparisons, and dashboard status indicators.
+- **Files likely affected:** `backend/app/api/budgets.py`, `backend/app/services/budget_service.py`, `frontend/src/features/budgets/`
+- **Dependencies:** P0-05, P0-07
+- **Acceptance criteria:** Over-budget and on-track states are deterministic and tested; API matches contract.
+
+### P1-03 Financial goals
+- **Description:** Add goal CRUD and deterministic progress/spending-impact indicators.
+- **Files likely affected:** `backend/app/api/goals.py`, `backend/app/services/goal_service.py`, `frontend/src/features/goals/`
+- **Dependencies:** P0-05, P0-07
+- **Acceptance criteria:** Goal progress is calculated from stored values; copy clearly states decision support, not advice.
+
+### P1-04 Monthly summary
+- **Description:** Compose a monthly summary from persisted analytics, recurring obligations, budgets, goals, and optional AI prose.
+- **Files likely affected:** `backend/app/api/monthly_summary.py`, `backend/app/services/summary_service.py`, `frontend/src/features/summary/`
+- **Dependencies:** P0-05, P0-06, P1-02, P1-03
+- **Acceptance criteria:** Summary is reproducible without AI and includes the main deterministic facts.
+
+## P2: Optional polish
+
+### P2-01 OCR
+- **Description:** Explore OCR only for a clearly supported statement sample.
+- **Files likely affected:** `backend/app/processing/`
+- **Dependencies:** P1-01
+- **Acceptance criteria:** OCR is isolated, time-bounded, and never blocks normal imports.
+
+### P2-02 Advanced anomaly detection
+- **Description:** Add explainable outlier heuristics beyond basic unusual-spend flags.
+- **Files likely affected:** `backend/app/services/analytics_service.py`, `frontend/src/`
+- **Dependencies:** P0-05
+- **Acceptance criteria:** Alerts include the comparison window and threshold used.
+
+### P2-03 Authentication and deployment polish
+- **Description:** Add authentication, production configuration, backup guidance, and hosted deployment only if demo needs it.
+- **Files likely affected:** `backend/app/`, `frontend/`, deployment files
+- **Dependencies:** All required MVP tasks
+- **Acceptance criteria:** Security review covers user isolation and secret handling before any public exposure.
+
+## Dependency summary
+`P0-01 -> P0-02 -> P0-03 -> P0-04 -> P0-05 -> P0-06 -> P0-07`
+
+`P0-05 + P0-06 -> P0-08`
+
+`P0-03 -> P1-01`; `P0-05 + P0-07 -> P1-02/P1-03`; `P1-02 + P1-03 -> P1-04`.
