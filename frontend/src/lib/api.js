@@ -90,3 +90,16 @@ export async function askFinAge(question, fromDate = null, toDate = null) {
     }),
   })
 }
+
+export async function fetchBudgets(month = null) {
+  const qs = month ? `?month=${month}` : ''
+  return request(`/api/analytics/budgets${qs}`)
+}
+
+export async function createBudget(budgetData) {
+  return request('/api/budgets', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(budgetData),
+  })
+}

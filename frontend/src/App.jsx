@@ -10,6 +10,8 @@ import TransactionTable from './components/TransactionTable'
 import UploadModal from './components/UploadModal'
 import AssistantPanel from './components/AssistantPanel'
 
+import BudgetTracker from './components/BudgetTracker'
+
 import {
   fetchSummary,
   fetchMonthlyAnalytics,
@@ -141,10 +143,11 @@ export default function App() {
           </div>
         </div>
 
-        {/* Row 2: Recurring Obligations & Transaction Ledger */}
+        {/* Row 2: Recurring Obligations, Budgets & Transaction Ledger */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 flex flex-col gap-6">
             <RecurringList data={recurringData} />
+            <BudgetTracker />
           </div>
           <div className="lg:col-span-2">
             <TransactionTable
