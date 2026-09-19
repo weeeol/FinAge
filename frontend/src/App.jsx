@@ -10,6 +10,7 @@ import TransactionTable from './components/TransactionTable'
 import UploadModal from './components/UploadModal'
 import AssistantPanel from './components/AssistantPanel'
 
+import MonthlySummary from './components/MonthlySummary'
 import BudgetTracker from './components/BudgetTracker'
 import GoalTracker from './components/GoalTracker'
 
@@ -130,6 +131,8 @@ export default function App() {
             </button>
           </div>
         )}
+
+        <MonthlySummary currentMonth="2026-01" />
 
         {/* Top Metric Snapshot Cards */}
         <SummaryCards summary={summary} isLoading={isLoading} />

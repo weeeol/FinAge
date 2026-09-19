@@ -115,3 +115,8 @@ export async function createGoal(goalData) {
     body: JSON.stringify(goalData),
   })
 }
+
+export async function fetchMonthlySummary(month) {
+  const qs = month ? `?month=${month}` : ''
+  return request(`/api/monthly-summary${qs}`)
+}
