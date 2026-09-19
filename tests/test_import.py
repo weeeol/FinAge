@@ -172,3 +172,21 @@ def test_categorizer_rules():
     assert categorize_description("AMAZON RETAIL PURCHASE") == "Shopping"
     assert categorize_description("TOTALLY RANDOM VENDOR XYZ") == "Other"
 
+def test_upload_pdf_file(client):
+    import fitz
+    doc = fitz.open()
+    page = doc.new_page()
+    page.insert_text((50, 50), "2026-06-01   Groceries at Market   -150.00")
+    page.insert_text((50, 70), "06/05/2026   Salary Deposit   3,000.00")
+    pdf_bytes = doc.write()
+    doc.close()
+
+    files = {"file": ("statement.pdf", io.BytesIO(pdf_bytes), "application/pdf")}
+    response = client.post("/api/upload", files=files)
+
+    assert response.status_code == 201
+    data = response.json()
+    assert data["imported"] == 2
+    assert data["skipped"] == 0
+
+

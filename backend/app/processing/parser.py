@@ -46,8 +46,14 @@ def parse_statement_file(content: bytes, filename: str) -> Tuple[List[Normalized
             df = pd.read_excel(io.BytesIO(content), engine="openpyxl")
         except Exception as e:
             raise ValueError(f"Unable to read Excel file: {str(e)}")
+    elif filename_lower.endswith(".pdf"):
+        from app.services.pdf_parser import parse_pdf_statement
+        try:
+            df = parse_pdf_statement(content)
+        except Exception as e:
+            raise ValueError(f"Unable to read PDF file: {str(e)}")
     else:
-        raise ValueError(f"Unsupported file format for: {filename}. Expected .csv or .xlsx.")
+        raise ValueError(f"Unsupported file format for: {filename}. Expected .csv, .xlsx, or .pdf.")
 
     if df.empty:
         return [], ["File contains no data rows."]

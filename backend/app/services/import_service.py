@@ -36,13 +36,6 @@ class ImportService:
                 detail=f"Unsupported file format '{ext}'. FinAge accepts .csv, .xlsx, or .pdf files."
             )
 
-        if ext == ".pdf":
-            # PDF text extraction will be handled in P1-01
-            raise HTTPException(
-                status_code=422,
-                detail="PDF statements are currently being indexed. Please upload CSV or XLSX format for instant ingestion."
-            )
-
         # 2. Parse file content
         try:
             candidates, warnings = parse_statement_file(content, filename)
