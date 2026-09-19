@@ -7,6 +7,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
 from app.db.init_db import init_db
+from app.api.router import api_router
 
 
 @asynccontextmanager
@@ -31,6 +32,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount API routes
+app.include_router(api_router)
 
 
 @app.exception_handler(RequestValidationError)
