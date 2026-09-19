@@ -33,7 +33,7 @@ class ImportService:
         if ext not in settings.ALLOWED_UPLOAD_EXTENSIONS:
             raise HTTPException(
                 status_code=422,
-                detail=f"Unsupported file format '{ext}'. FinPilot accepts .csv, .xlsx, or .pdf files."
+                detail=f"Unsupported file format '{ext}'. FinAge accepts .csv, .xlsx, or .pdf files."
             )
 
         if ext == ".pdf":

@@ -14,36 +14,37 @@ import { Calendar } from 'lucide-react'
 export default function MonthlyChart({ data = [] }) {
   if (!data || data.length === 0) {
     return (
-      <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-6 flex flex-col items-center justify-center min-h-[320px] text-center">
-        <Calendar className="w-10 h-10 text-slate-600 mb-2" />
-        <p className="text-sm font-medium text-slate-300">No Monthly Trends Available</p>
-        <p className="text-xs text-slate-500 max-w-sm mt-1">
-          Upload bank statements to visualize your income vs. expense performance over time.
+      <div className="rounded-xl border border-[#e0e5de] bg-white p-6 flex flex-col items-center justify-center min-h-[340px] text-center">
+        <div className="h-12 w-12 rounded-xl bg-[#f5f6f2] flex items-center justify-center text-[#78827c] mb-3">
+          <Calendar className="w-6 h-6" />
+        </div>
+        <p className="font-serif text-base font-medium text-[#1f2724]">No Cash Flow Data</p>
+        <p className="text-xs text-[#78827c] max-w-sm mt-1">
+          Upload statements to visualize your monthly inflow vs. outflow history.
         </p>
       </div>
     )
   }
 
-  // Transform minor units to standard dollars for the chart
   const formattedData = data.map((d) => ({
     month: d.month,
-    Income: d.income_minor / 100,
-    Expenses: d.expense_minor / 100,
+    Inflows: d.income_minor / 100,
+    Outflows: d.expense_minor / 100,
     Net: d.net_minor / 100,
   }))
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="rounded-lg border border-slate-700 bg-slate-900 p-3 shadow-xl text-xs space-y-1">
-          <p className="font-semibold text-slate-200 border-b border-slate-800 pb-1 mb-1">{label}</p>
+        <div className="rounded-lg border border-[#e0e5de] bg-white p-3 shadow-md text-xs space-y-1">
+          <p className="font-serif font-bold text-[#1f2724] border-b border-[#f0f2ee] pb-1 mb-1">{label}</p>
           {payload.map((entry, index) => (
             <div key={`item-${index}`} className="flex items-center justify-between gap-4">
-              <span className="flex items-center gap-1.5 text-slate-400">
+              <span className="flex items-center gap-1.5 text-[#78827c]">
                 <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
                 {entry.name}:
               </span>
-              <span className="font-medium text-white">
+              <span className="font-semibold text-[#1f2724]">
                 ${entry.value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </span>
             </div>
@@ -55,29 +56,29 @@ export default function MonthlyChart({ data = [] }) {
   }
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/50 p-5 backdrop-blur flex flex-col shadow-sm">
+    <div className="rounded-xl border border-[#e0e5de] bg-white p-6 shadow-xs flex flex-col">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-base font-semibold text-white">Cash Flow Trends</h2>
-          <p className="text-xs text-slate-400">Monthly income vs. outflow comparison</p>
+          <h2 className="font-serif text-xl font-normal text-[#1f2724]">Cash Flow Overview</h2>
+          <p className="text-xs text-[#78827c] mt-0.5">Monthly inflow vs. outflow progression</p>
         </div>
       </div>
 
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={formattedData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
-            <XAxis dataKey="month" stroke="#64748b" fontSize={11} tickLine={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f2ee" vertical={false} />
+            <XAxis dataKey="month" stroke="#78827c" fontSize={11} tickLine={false} />
             <YAxis
-              stroke="#64748b"
+              stroke="#78827c"
               fontSize={11}
               tickLine={false}
               tickFormatter={(v) => `$${v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v}`}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 12, paddingTop: 10 }} />
-            <Bar dataKey="Income" fill="#10b981" radius={[4, 4, 0, 0]} maxBarSize={40} />
-            <Bar dataKey="Expenses" fill="#f43f5e" radius={[4, 4, 0, 0]} maxBarSize={40} />
+            <Legend wrapperStyle={{ fontSize: 12, paddingTop: 12 }} />
+            <Bar dataKey="Inflows" fill="#15803d" radius={[4, 4, 0, 0]} maxBarSize={36} />
+            <Bar dataKey="Outflows" fill="#c2410c" radius={[4, 4, 0, 0]} maxBarSize={36} />
           </BarChart>
         </ResponsiveContainer>
       </div>

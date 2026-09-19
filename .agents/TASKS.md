@@ -2,6 +2,15 @@
 
 Antigravity owns implementation. Tasks are ordered by dependency but can be assigned independently once prerequisites are complete. Every implementation task must preserve the documented API and data model or update the relevant architecture record first.
 
+## Continuation checkpoint
+
+The previous implementation run completed the main P0-07 data-backed dashboard and partially completed P0-09. Do not rebuild P0-07 from scratch.
+
+- **P0-08 status:** Not started. No `/api/ask`, AI adapter, grounded context builder, or assistant UI currently exists.
+- **P0-09 status:** Partially complete. FinAge naming and the light editorial visual system are present in the current frontend/backend implementation. Remaining work is a full stale-name audit, browser metadata/package-name consistency, responsive verification, and regression checks.
+- **Resume order:** P0-08 backend contract and tests -> P0-08 assistant UI -> P0-09 rename audit and visual regression -> full focused validation.
+- **Ownership boundary:** Antigravity may modify implementation files listed by the tasks. Copilot-owned architecture and contract documents must not be changed unless an API/schema/design decision actually changes.
+
 ## P0: Required for demo
 
 ### P0-01 Project setup
@@ -51,6 +60,12 @@ Antigravity owns implementation. Tasks are ordered by dependency but can be assi
 - **Files likely affected:** `backend/app/ai/`, `backend/app/services/qa_service.py`, `backend/app/api/ask.py`, `frontend/src/features/assistant/`
 - **Dependencies:** P0-05, P0-06
 - **Acceptance criteria:** Questions answer from supplied aggregates; missing data is acknowledged; no investment recommendations; endpoint works in controlled unavailable mode without a key.
+- **Implementation sequence:**
+	1. Build a bounded context DTO from existing summary, monthly, category, recurring, and transaction services; do not pass uploaded files or unrestricted database dumps to the model.
+	2. Add Pydantic request/response schemas matching `API_CONTRACT.md` and a thin `/api/ask` route.
+	3. Add an OpenAI adapter behind a service boundary. If `OPENAI_API_KEY` is absent, return the documented `503 ai_unavailable` response without breaking the dashboard.
+	4. Add mocked tests for grounding, insufficient data, refusal of investment questions, malformed provider output, and no-key behavior.
+	5. Add the smallest useful assistant panel to the existing FinAge UI; preserve current loading/error/refresh/upload flows.
 
 ### P0-09 FinAge visual system recovery and product rename
 - **Description:** Restore the approved FinAge dashboard direction after the P0-07 implementation: light workspace shell, restrained editorial typography, muted green/coral/gold palette, clear financial hierarchy, and responsive layouts. Replace all user-visible and runtime product references from FinPilot to FinAge without changing API paths or financial behavior.
@@ -63,6 +78,8 @@ Antigravity owns implementation. Tasks are ordered by dependency but can be assi
 	- Responsive behavior is verified at desktop and narrow mobile widths.
 	- No new investment, stock, trading, or financial-product recommendation language is introduced.
 	- `npm run build` and focused backend/frontend checks pass.
+- **Current implementation note:** The current `frontend/src/components/` already contains the light FinAge palette and serif treatment. Review and refine those files in place; do not replace them with a new dark template.
+- **Rename audit:** Search tracked source/config/docs for `FinPilot`; remaining occurrences should be intentional historical references only. Runtime strings, package metadata, page title, API metadata, seed email, logs, and user-facing errors must use `FinAge`.
 
 ## P1: Important
 

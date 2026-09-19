@@ -1,1 +1,1 @@
-# FinPilot backend app package
+# FinAge backend app package

@@ -1,5 +1,5 @@
 /**
- * API client and utilities for FinPilot
+ * API client and utilities for FinAge
  */
 
 export function formatMoney(minorUnits = 0, currency = 'USD') {
@@ -77,4 +77,16 @@ export async function uploadFile(file) {
   }
 
   return data
+}
+
+export async function askFinAge(question, fromDate = null, toDate = null) {
+  return request('/api/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      question,
+      from_date: fromDate,
+      to_date: toDate,
+    }),
+  })
 }

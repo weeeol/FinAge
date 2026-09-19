@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { X, UploadCloud, FileText, CheckCircle, AlertTriangle, Loader2 } from 'lucide-react'
+import { X, UploadCloud, CheckCircle, AlertTriangle, Loader2 } from 'lucide-react'
 import { uploadFile } from '../lib/api'
 
 export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
@@ -70,17 +70,17 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
-      <div className="relative w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-xs">
+      <div className="relative w-full max-w-lg rounded-2xl border border-[#e0e5de] bg-white p-6 shadow-xl">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-4 border-b border-[#e0e5de]">
           <div>
-            <h3 className="text-lg font-semibold text-white">Upload Financial Statement</h3>
-            <p className="text-xs text-slate-400 mt-0.5">Accepts CSV and Excel (.xlsx) bank records</p>
+            <h3 className="font-serif text-lg font-bold text-[#1f2724]">Upload Statement</h3>
+            <p className="text-xs text-[#78827c] mt-0.5">Ingest CSV or Excel (.xlsx) financial records</p>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="p-1 rounded-lg text-[#78827c] hover:text-[#1f2724] hover:bg-[#f5f6f2] transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -99,8 +99,8 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
                 onClick={() => inputRef.current?.click()}
                 className={`border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition ${
                   dragActive
-                    ? 'border-indigo-500 bg-indigo-500/10'
-                    : 'border-slate-700 hover:border-indigo-500/50 hover:bg-slate-800/40 bg-slate-950/40'
+                    ? 'border-[#1f2724] bg-[#f5f6f2]'
+                    : 'border-[#d0d7cf] hover:border-[#1f2724] bg-[#fbfcf9]'
                 }`}
               >
                 <input
@@ -110,13 +110,13 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
                   onChange={handleChange}
                   className="hidden"
                 />
-                <div className="h-12 w-12 rounded-full bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-3">
+                <div className="h-12 w-12 rounded-full bg-[#f1f5ed] text-[#58725b] flex items-center justify-center mb-3">
                   <UploadCloud className="w-6 h-6" />
                 </div>
-                <p className="text-sm font-medium text-white">
-                  {selectedFile ? selectedFile.name : 'Click to browse or drop statement here'}
+                <p className="text-sm font-medium text-[#1f2724]">
+                  {selectedFile ? selectedFile.name : 'Select or drop statement file'}
                 </p>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-[#78827c] mt-1">
                   {selectedFile
                     ? `${(selectedFile.size / 1024).toFixed(1)} KB`
                     : 'CSV, XLSX up to 10MB • Columns auto-detected'}
@@ -125,8 +125,8 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
 
               {/* Error Alert */}
               {error && (
-                <div className="mt-4 p-3 rounded-lg border border-rose-500/30 bg-rose-500/10 text-rose-300 text-xs flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                <div className="mt-4 p-3 rounded-lg border border-[#f5d5cc] bg-[#fdf2ef] text-[#c2410c] text-xs flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-[#c2410c] shrink-0 mt-0.5" />
                   <span>{error}</span>
                 </div>
               )}
@@ -134,42 +134,42 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
           ) : (
             /* Result Summary */
             <div className="space-y-4">
-              <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 flex items-center gap-3 text-emerald-300">
-                <CheckCircle className="w-6 h-6 text-emerald-400 shrink-0" />
+              <div className="p-4 rounded-xl border border-[#d6e8de] bg-[#f1f7f4] flex items-center gap-3 text-[#15803d]">
+                <CheckCircle className="w-6 h-6 text-[#15803d] shrink-0" />
                 <div>
-                  <h4 className="text-sm font-semibold text-white">Import Complete</h4>
-                  <p className="text-xs text-emerald-300/90 mt-0.5">
-                    Your financial statement was parsed and normalized.
+                  <h4 className="font-serif text-sm font-bold text-[#1f2724]">Statement Ingestion Complete</h4>
+                  <p className="text-xs text-[#526057] mt-0.5">
+                    Records normalized and categorized into ledger.
                   </p>
                 </div>
               </div>
 
               {/* Stats Grid */}
               <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 rounded-lg border border-slate-800 bg-slate-950/50 text-center">
-                  <p className="text-[11px] text-slate-400 font-medium">Imported</p>
-                  <p className="text-lg font-bold text-emerald-400 mt-0.5">{result.imported}</p>
+                <div className="p-3 rounded-lg border border-[#e0e5de] bg-[#fbfcf9] text-center">
+                  <p className="text-[11px] text-[#78827c] font-medium">Imported</p>
+                  <p className="font-serif text-xl font-bold text-[#15803d] mt-0.5">{result.imported}</p>
                 </div>
-                <div className="p-3 rounded-lg border border-slate-800 bg-slate-950/50 text-center">
-                  <p className="text-[11px] text-slate-400 font-medium">Skipped</p>
-                  <p className="text-lg font-bold text-amber-400 mt-0.5">{result.skipped}</p>
+                <div className="p-3 rounded-lg border border-[#e0e5de] bg-[#fbfcf9] text-center">
+                  <p className="text-[11px] text-[#78827c] font-medium">Skipped</p>
+                  <p className="font-serif text-xl font-bold text-[#b45309] mt-0.5">{result.skipped}</p>
                 </div>
-                <div className="p-3 rounded-lg border border-slate-800 bg-slate-950/50 text-center">
-                  <p className="text-[11px] text-slate-400 font-medium">Categorized</p>
-                  <p className="text-lg font-bold text-indigo-400 mt-0.5">{result.categories_assigned}</p>
+                <div className="p-3 rounded-lg border border-[#e0e5de] bg-[#fbfcf9] text-center">
+                  <p className="text-[11px] text-[#78827c] font-medium">Categorized</p>
+                  <p className="font-serif text-xl font-bold text-[#1f2724] mt-0.5">{result.categories_assigned}</p>
                 </div>
               </div>
 
               {/* Warnings if any */}
               {result.warnings && result.warnings.length > 0 && (
-                <div className="p-3 rounded-lg border border-slate-800 bg-slate-950/50 max-h-36 overflow-y-auto">
-                  <p className="text-[11px] font-semibold text-slate-400 mb-1">Processing Notes:</p>
-                  <ul className="text-[11px] text-slate-400 space-y-1 list-disc list-inside">
+                <div className="p-3 rounded-lg border border-[#e0e5de] bg-[#fbfcf9] max-h-36 overflow-y-auto">
+                  <p className="text-[11px] font-semibold text-[#78827c] mb-1">Processing Notes:</p>
+                  <ul className="text-[11px] text-[#78827c] space-y-1 list-disc list-inside">
                     {result.warnings.slice(0, 5).map((w, idx) => (
                       <li key={idx} className="truncate">{w}</li>
                     ))}
                     {result.warnings.length > 5 && (
-                      <li className="text-slate-500 italic">+{result.warnings.length - 5} more warnings</li>
+                      <li className="text-[#a5ada7] italic">+{result.warnings.length - 5} more notes</li>
                     )}
                   </ul>
                 </div>
@@ -179,13 +179,13 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#e0e5de]">
           {!result ? (
             <>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg text-xs font-medium text-slate-400 hover:text-white transition"
+                className="px-4 py-2 rounded-lg text-xs font-medium text-[#78827c] hover:text-[#1f2724] transition"
               >
                 Cancel
               </button>
@@ -193,15 +193,15 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
                 type="button"
                 onClick={handleUploadSubmit}
                 disabled={!selectedFile || isUploading}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white text-xs font-semibold shadow-lg shadow-indigo-600/25 transition disabled:opacity-40"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1f2724] hover:bg-[#2d3834] active:bg-[#151c19] text-white text-xs font-semibold shadow-xs transition disabled:opacity-40"
               >
                 {isUploading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Processing statement...</span>
+                    <Loader2 className="w-4 h-4 animate-spin text-[#e8bb62]" />
+                    <span>Ingesting records...</span>
                   </>
                 ) : (
-                  <span>Upload & Ingest</span>
+                  <span>Import Records</span>
                 )}
               </button>
             </>
@@ -210,14 +210,14 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
               <button
                 type="button"
                 onClick={handleReset}
-                className="text-xs font-medium text-indigo-400 hover:underline"
+                className="text-xs font-medium text-[#1f2724] underline hover:text-[#2e7d32]"
               >
-                Upload another file
+                Upload another statement
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/25 transition"
+                className="px-4 py-2 rounded-lg bg-[#1f2724] hover:bg-[#2d3834] text-white text-xs font-semibold shadow-xs transition"
               >
                 Done
               </button>

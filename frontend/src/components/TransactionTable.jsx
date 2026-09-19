@@ -13,32 +13,32 @@ export default function TransactionTable({
   const totalPages = Math.ceil(total / pageSize) || 1
 
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900/50 backdrop-blur flex flex-col shadow-sm overflow-hidden">
-      <div className="p-5 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="rounded-xl border border-[#e0e5de] bg-white shadow-xs flex flex-col overflow-hidden">
+      <div className="p-6 border-b border-[#e0e5de] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-base font-semibold text-white">Transaction Ledger</h2>
-          <p className="text-xs text-slate-400">
-            {total} total records normalized in minor units
+          <h2 className="font-serif text-xl font-normal text-[#1f2724]">Transaction Ledger</h2>
+          <p className="text-xs text-[#78827c] mt-0.5">
+            {total} normalized statement records
           </p>
         </div>
 
         {/* Pagination controls */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-[#78827c]">
             Page {page} of {totalPages}
           </span>
           <div className="flex items-center gap-1">
             <button
               onClick={() => onPageChange(page - 1)}
               disabled={page <= 1 || isLoading}
-              className="p-1.5 rounded border border-slate-800 bg-slate-900 text-slate-400 hover:text-white disabled:opacity-40 transition"
+              className="p-1.5 rounded border border-[#e0e5de] bg-white text-[#78827c] hover:text-[#1f2724] hover:bg-[#edf1ec] disabled:opacity-40 transition"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => onPageChange(page + 1)}
               disabled={page >= totalPages || isLoading}
-              className="p-1.5 rounded border border-slate-800 bg-slate-900 text-slate-400 hover:text-white disabled:opacity-40 transition"
+              className="p-1.5 rounded border border-[#e0e5de] bg-white text-[#78827c] hover:text-[#1f2724] hover:bg-[#edf1ec] disabled:opacity-40 transition"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -47,49 +47,51 @@ export default function TransactionTable({
       </div>
 
       {transactions.length === 0 ? (
-        <div className="p-10 flex flex-col items-center justify-center text-center">
-          <ListFilter className="w-8 h-8 text-slate-600 mb-2" />
-          <p className="text-sm font-medium text-slate-300">No Transactions Found</p>
-          <p className="text-xs text-slate-500 mt-1">
-            Upload your first statement to populate the financial ledger.
+        <div className="p-12 flex flex-col items-center justify-center text-center">
+          <div className="h-12 w-12 rounded-xl bg-[#f5f6f2] flex items-center justify-center text-[#78827c] mb-2">
+            <ListFilter className="w-6 h-6" />
+          </div>
+          <p className="font-serif text-base font-medium text-[#1f2724]">No Transactions Available</p>
+          <p className="text-xs text-[#78827c] mt-1 max-w-sm">
+            Upload statements to populate the financial ledger.
           </p>
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-800/80 bg-slate-950/40 text-[11px] uppercase tracking-wider text-slate-400">
-                <th className="py-3 px-5 font-semibold">Date</th>
-                <th className="py-3 px-5 font-semibold">Description</th>
-                <th className="py-3 px-5 font-semibold">Category</th>
-                <th className="py-3 px-5 font-semibold text-right">Amount</th>
+              <tr className="border-b border-[#e0e5de] bg-[#fbfcf9] text-[11px] uppercase tracking-wider text-[#78827c]">
+                <th className="py-3 px-6 font-semibold">Date</th>
+                <th className="py-3 px-6 font-semibold">Description</th>
+                <th className="py-3 px-6 font-semibold">Category</th>
+                <th className="py-3 px-6 font-semibold text-right">Amount</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60 text-xs text-slate-200">
+            <tbody className="divide-y divide-[#f0f2ee] text-xs">
               {transactions.map((txn) => {
                 const isIncome = txn.amount_minor > 0
                 return (
-                  <tr key={txn.id} className="hover:bg-slate-800/30 transition-colors">
-                    <td className="py-3 px-5 text-slate-400 whitespace-nowrap font-mono text-[11px]">
+                  <tr key={txn.id} className="hover:bg-[#fbfcf9] transition-colors">
+                    <td className="py-3 px-6 text-[#78827c] whitespace-nowrap font-mono text-[11px]">
                       {txn.date}
                     </td>
-                    <td className="py-3 px-5 font-medium text-white max-w-xs truncate">
-                      <div className="flex items-center gap-2">
+                    <td className="py-3 px-6 font-medium text-[#1f2724] max-w-xs truncate">
+                      <div className="flex items-center gap-2.5">
                         <span className={`h-6 w-6 rounded-md flex items-center justify-center shrink-0 ${
-                          isIncome ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'
+                          isIncome ? 'bg-[#f1f7f4] text-[#15803d]' : 'bg-[#fdf2ef] text-[#c2410c]'
                         }`}>
                           {isIncome ? <ArrowDownLeft className="w-3.5 h-3.5" /> : <ArrowUpRight className="w-3.5 h-3.5" />}
                         </span>
                         <span className="truncate">{txn.description}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-5 whitespace-nowrap">
-                      <span className="inline-block px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-800 border border-slate-700/60 text-slate-300">
+                    <td className="py-3 px-6 whitespace-nowrap">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#f5f6f2] border border-[#e0e5de] text-[#526057]">
                         {txn.category || 'Other'}
                       </span>
                     </td>
-                    <td className={`py-3 px-5 whitespace-nowrap text-right font-semibold font-mono ${
-                      isIncome ? 'text-emerald-400' : 'text-slate-100'
+                    <td className={`py-3 px-6 whitespace-nowrap text-right font-semibold font-mono ${
+                      isIncome ? 'text-[#15803d]' : 'text-[#1f2724]'
                     }`}>
                       {isIncome ? `+${formatMoney(txn.amount_minor, txn.currency)}` : formatMoney(txn.amount_minor, txn.currency)}
                     </td>

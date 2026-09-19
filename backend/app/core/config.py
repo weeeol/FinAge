@@ -3,13 +3,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "FinPilot"
+    PROJECT_NAME: str = "FinAge"
     API_PREFIX: str = "/api"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
     PORT: int = 8000
 
-    DATABASE_URL: str = "sqlite:///./data/finpilot.db"
+    DATABASE_URL: str = "sqlite:///./data/finage.db"
 
     OPENAI_API_KEY: Optional[str] = None
     OPENAI_MODEL: str = "gpt-4o-mini"

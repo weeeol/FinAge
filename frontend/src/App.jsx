@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { AlertCircle, FileSpreadsheet, RefreshCw } from 'lucide-react'
+import { AlertCircle, ShieldAlert } from 'lucide-react'
 
 import Header from './components/Header'
 import SummaryCards from './components/SummaryCards'
@@ -8,6 +8,7 @@ import CategoryPieChart from './components/CategoryPieChart'
 import RecurringList from './components/RecurringList'
 import TransactionTable from './components/TransactionTable'
 import UploadModal from './components/UploadModal'
+import AssistantPanel from './components/AssistantPanel'
 
 import {
   fetchSummary,
@@ -62,7 +63,7 @@ export default function App() {
       setTotalTransactions(txnsRes.total || 0)
       setPage(1)
     } catch (err) {
-      setError(err.message || 'Failed to load financial analytics from backend.')
+      setError(err.message || 'Failed to load financial analytics from FinAge backend.')
     } finally {
       setIsLoading(false)
       setIsRefreshing(false)
@@ -85,7 +86,7 @@ export default function App() {
   }, [loadDashboardData])
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col antialiased">
+    <div className="min-h-screen bg-[#faf9f5] text-[#1f2724] flex flex-col antialiased">
       {/* Top Header */}
       <Header
         onOpenUpload={() => setUploadModalOpen(true)}
@@ -93,28 +94,44 @@ export default function App() {
         isRefreshing={isRefreshing}
       />
 
-      {/* Main Dashboard Body */}
+      {/* Main Workspace Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8 flex flex-col gap-6">
+        {/* Workspace Intro / Notice Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#e0e5de] pb-4">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-[#78827c]">
+              Personal Finance Decision Support
+            </p>
+            <h1 className="font-serif text-2xl sm:text-3xl font-normal text-[#1f2724] tracking-tight mt-0.5">
+              Financial Overview & Performance
+            </h1>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-[#78827c] bg-[#f1f5ed] border border-[#dfe9db] rounded-lg px-3 py-1.5 self-start sm:self-auto">
+            <span className="h-2 w-2 rounded-full bg-[#15803d]" />
+            <span>Deterministic backend calculations active</span>
+          </div>
+        </div>
+
         {/* Error Banner */}
         {error && (
-          <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-rose-300 text-xs flex items-center justify-between gap-3">
+          <div className="rounded-xl border border-[#f5d5cc] bg-[#fdf2ef] p-4 text-[#c2410c] text-xs flex items-center justify-between gap-3 shadow-xs">
             <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
+              <AlertCircle className="w-5 h-5 text-[#c2410c] shrink-0" />
               <span>{error}</span>
             </div>
             <button
               onClick={() => loadDashboardData(true)}
-              className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/30 font-medium transition"
+              className="px-3 py-1.5 rounded-lg bg-[#f9e2db] hover:bg-[#f5d5cc] font-semibold transition"
             >
               Retry
             </button>
           </div>
         )}
 
-        {/* Top Metric Cards */}
+        {/* Top Metric Snapshot Cards */}
         <SummaryCards summary={summary} isLoading={isLoading} />
 
-        {/* Row 1: Monthly Trend BarChart & Category Donut Chart */}
+        {/* Row 1: Cash Flow BarChart & Expense Allocation Donut */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <MonthlyChart data={monthlyData} />
@@ -124,7 +141,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Row 2: Recurring Payments List & Recent Transaction Ledger */}
+        {/* Row 2: Recurring Obligations & Transaction Ledger */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1">
             <RecurringList data={recurringData} />
@@ -140,6 +157,8 @@ export default function App() {
             />
           </div>
         </div>
+
+        <AssistantPanel />
       </main>
 
       {/* Statement Upload Modal */}

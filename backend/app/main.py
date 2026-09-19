@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="FinPilot - Personal Finance Decision-Support Agent API",
+    description="FinAge - Personal Finance Decision-Support Agent API",
     version="0.1.0",
     lifespan=lifespan,
 )
