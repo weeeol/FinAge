@@ -66,10 +66,10 @@ export default function BudgetTracker() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'on_track': return 'bg-sage'
-      case 'warning': return 'bg-gold'
-      case 'exceeded': return 'bg-coral'
-      default: return 'bg-sage'
+      case 'on_track': return 'bg-[#58725b]'
+      case 'warning': return 'bg-[#c89234]'
+      case 'exceeded': return 'bg-[#c05346]'
+      default: return 'bg-[#58725b]'
     }
   }
 
@@ -111,11 +111,8 @@ export default function BudgetTracker() {
               <span><b>{b.category}</b></span>
               <span>{formatMoney(b.spent_minor)} / {formatMoney(b.limit_minor)}</span>
             </div>
-            <div className="category-track">
-              <span 
-                className={getStatusColor(b.status)} 
-                style={{ width: `${Math.min(b.percent_used * 100, 100)}%` }}
-              ></span>
+            <div className="h-2 w-full rounded-full bg-[#e5e9e2] overflow-hidden my-2">
+              <div className={`h-full rounded-full ${getStatusColor(b.status)}`} style={{ width: `${Math.min(b.percent_used * 100, 100)}%` }}></div>
             </div>
             <div className="text-[10px] text-[#9aa49e] mt-1 flex justify-between">
               <span>{Math.round(b.percent_used * 100)}% used</span>

@@ -103,3 +103,15 @@ export async function createBudget(budgetData) {
     body: JSON.stringify(budgetData),
   })
 }
+
+export async function fetchGoals() {
+  return request('/api/goals')
+}
+
+export async function createGoal(goalData) {
+  return request('/api/goals', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(goalData),
+  })
+}
