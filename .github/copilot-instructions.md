@@ -1,4 +1,4 @@
-# FinPilot Copilot Instructions
+# FinAge Copilot Instructions
 
 ## Operating mode
 - Act as the system architect and technical lead for a one-day MVP.
@@ -7,7 +7,7 @@
 - Keep changes small, demoable, and consistent with the documented contracts.
 
 ## Product boundaries
-- FinPilot is decision support, not an investment advisor.
+- FinAge is decision support, not an investment advisor.
 - Never implement investment, stock, trading, or financial-product recommendations.
 - Deterministic backend calculations are authoritative for amounts, totals, dates, budgets, and trends.
 - Do not send raw financial documents to the LLM when structured extraction is possible.

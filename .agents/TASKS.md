@@ -1,4 +1,4 @@
-# FinPilot Implementation Tasks
+# FinAge Implementation Tasks
 
 Antigravity owns implementation. Tasks are ordered by dependency but can be assigned independently once prerequisites are complete. Every implementation task must preserve the documented API and data model or update the relevant architecture record first.
 
@@ -51,6 +51,18 @@ Antigravity owns implementation. Tasks are ordered by dependency but can be assi
 - **Files likely affected:** `backend/app/ai/`, `backend/app/services/qa_service.py`, `backend/app/api/ask.py`, `frontend/src/features/assistant/`
 - **Dependencies:** P0-05, P0-06
 - **Acceptance criteria:** Questions answer from supplied aggregates; missing data is acknowledged; no investment recommendations; endpoint works in controlled unavailable mode without a key.
+
+### P0-09 FinAge visual system recovery and product rename
+- **Description:** Restore the approved FinAge dashboard direction after the P0-07 implementation: light workspace shell, restrained editorial typography, muted green/coral/gold palette, clear financial hierarchy, and responsive layouts. Replace all user-visible and runtime product references from FinPilot to FinAge without changing API paths or financial behavior.
+- **Files likely affected:** `frontend/src/`, `frontend/package.json`, `frontend/package-lock.json`, `backend/app/core/config.py`, `backend/app/main.py`, `backend/app/db/`, `backend/app/services/`, `README.md`
+- **Dependencies:** P0-07
+- **Acceptance criteria:**
+	- Header, page title, metadata, backend title/description, seed identity, and user-facing errors consistently say FinAge.
+	- Dashboard no longer presents as a dark generic status/card wall; it presents the finance workspace described in `ARCHITECTURE.md` with summary, trends, categories, recurring obligations, transactions, and upload action.
+	- Existing upload, refresh, loading, empty, error, pagination, and chart data flows remain functional.
+	- Responsive behavior is verified at desktop and narrow mobile widths.
+	- No new investment, stock, trading, or financial-product recommendation language is introduced.
+	- `npm run build` and focused backend/frontend checks pass.
 
 ## P1: Important
 
