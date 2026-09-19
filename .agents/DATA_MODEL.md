@@ -1,4 +1,4 @@
-# FinPilot Data Model
+# FinAge Data Model
 
 All monetary values are integer minor units (`int`, normally cents). Currency is an ISO 4217 string, default `USD`. Dates use ISO `YYYY-MM-DD`. SQLAlchemy owns persistence; these definitions describe the MVP contract.
 

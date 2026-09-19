@@ -10,7 +10,7 @@ import app.models  # Ensure all models are loaded into Base.metadata
 from app.models.user import User
 from app.models.category import Category
 
-logger = logging.getLogger("finpilot.db")
+logger = logging.getLogger("finage.db")
 
 DEFAULT_CATEGORIES = [
     # Income
@@ -60,7 +60,7 @@ def init_db(db_session: Session = None) -> None:
             demo_user = User(
                 id=1,
                 name="Demo User",
-                email="demo@finpilot.local",
+                email="demo@finage.local",
                 currency="USD",
             )
             session.add(demo_user)

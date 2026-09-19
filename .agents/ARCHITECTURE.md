@@ -1,7 +1,7 @@
-# FinPilot Architecture
+# FinAge Architecture
 
 ## 1. System overview
-FinPilot is a single-user, local-first personal finance decision-support MVP. A React/Vite frontend calls one FastAPI application. The backend extracts and normalizes uploaded records, stores structured data in SQLite, performs deterministic analytics, and optionally asks OpenAI to explain those results. The product does not provide investment, stock, trading, or financial-product recommendations.
+FinAge is a single-user, local-first personal finance decision-support MVP. A React/Vite frontend calls one FastAPI application. The backend extracts and normalizes uploaded records, stores structured data in SQLite, performs deterministic analytics, and optionally asks OpenAI to explain those results. The product does not provide investment, stock, trading, or financial-product recommendations.
 
 Primary flow:
 
@@ -20,7 +20,7 @@ The backend is the source of truth for financial arithmetic. The MVP assumes one
 Keep the application modular inside one backend process. Do not add microservices, queues, or event buses.
 
 ## 3. Frontend architecture
-Use feature-oriented folders under `frontend/src`: `components/`, `features/transactions/`, `features/analytics/`, `features/budgets/`, `features/goals/`, `features/assistant/`, `lib/`, and `types/`. Keep API calls in one typed client module. Use server responses rather than duplicating financial calculations in the browser. Recharts is for monthly trends, category distribution, and recurring obligations. Provide loading, empty, error, and upload-progress states.
+Use feature-oriented folders under `frontend/src`: `components/`, `features/transactions/`, `features/analytics/`, `features/budgets/`, `features/goals/`, `features/assistant/`, `lib/`, and `types/`. Keep API calls in one typed client module. Use server responses rather than duplicating financial calculations in the browser. Recharts is for monthly trends, category distribution, and recurring obligations. Provide loading, empty, error, and upload-progress states. The visual direction is a light, calm finance workspace with editorial serif headings, restrained muted green/coral/gold accents, clear hierarchy, and minimal decorative chrome; avoid dark gradient-heavy status dashboards and generic card grids.
 
 ## 4. Backend architecture
 Use a thin route layer: validate input, call a service, map result to a response model. Services own business rules. Parsers return normalized transaction candidates and do not write directly to the database. SQLAlchemy models represent persisted state. Configuration comes from environment variables with safe local defaults. Keep dependencies explicit and avoid a generic repository framework unless repetition proves it useful.

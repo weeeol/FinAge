@@ -1,4 +1,14 @@
-# FinPilot Architecture Decisions
+# FinAge Architecture Decisions
+
+## Decision: FinAge is the canonical product name
+Reason:
+The product identity is FinAge. Consistent naming across the UI, API metadata, package metadata, seed data, and documentation prevents confusing demo output and handoff drift.
+
+Alternatives:
+Keep the earlier FinPilot name in implementation internals.
+
+Why not:
+Mixed names make the product look unfinished and can leak into user-visible errors, browser metadata, and generated API documentation.
 
 ## Decision: SQLite
 Reason:

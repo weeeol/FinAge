@@ -1,7 +1,7 @@
 # AI Skill
 
 ## Role
-Provide useful explanations and natural-language answers grounded in deterministic FinPilot data.
+Provide useful explanations and natural-language answers grounded in deterministic FinAge data.
 
 ## Responsibilities
 Own the OpenAI adapter, structured context builder, prompts, answer validation, refusal boundaries, and AI-focused tests.

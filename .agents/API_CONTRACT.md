@@ -1,4 +1,4 @@
-# FinPilot API Contract
+# FinAge API Contract
 
 Base path: `/api`. JSON dates are `YYYY-MM-DD`; money is integer minor units. Unless noted, responses are JSON. Error shape:
 
