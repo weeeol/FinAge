@@ -22,3 +22,16 @@ class CategoryAnalyticsItem(BaseModel):
 
 class CategoryAnalyticsResponse(BaseModel):
     items: List[CategoryAnalyticsItem]
+
+
+class RecurringPaymentItem(BaseModel):
+    merchant_name: str = Field(..., description="Normalized merchant or payee name")
+    typical_amount_minor: int = Field(..., description="Typical payment amount in minor units")
+    frequency: str = Field(..., description="Detected recurrence: weekly, monthly, annual, unknown")
+    next_expected_date: str = Field(..., description="Projected next billing date (YYYY-MM-DD)")
+    confidence: float = Field(..., description="Detection confidence score (0.0 to 1.0)")
+
+
+class RecurringAnalyticsResponse(BaseModel):
+    items: List[RecurringPaymentItem]
+

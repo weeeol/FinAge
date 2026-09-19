@@ -3,8 +3,13 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.db.session import get_db
-from app.schemas.analytics import MonthlyAnalyticsResponse, CategoryAnalyticsResponse
+from app.schemas.analytics import (
+    MonthlyAnalyticsResponse,
+    CategoryAnalyticsResponse,
+    RecurringAnalyticsResponse,
+)
 from app.services.analytics_service import AnalyticsService
+from app.services.recurring_service import RecurringService
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
 
@@ -25,3 +30,12 @@ def get_category_analytics(
 ):
     service = AnalyticsService(db)
     return service.get_category_analytics(user_id=1, month=month)
+
+
+@router.get("/recurring", response_model=RecurringAnalyticsResponse)
+def get_recurring_analytics(
+    db: Session = Depends(get_db),
+):
+    service = RecurringService(db)
+    return service.detect_and_sync_recurring(user_id=1)
+
