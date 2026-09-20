@@ -132,3 +132,9 @@ export async function fetchMonthlySummary(month) {
   const qs = month ? `?month=${month}` : ''
   return request(`/api/monthly-summary${qs}`)
 }
+
+export async function resetDatabase() {
+  return request('/api/reset-database', {
+    method: 'POST',
+  })
+}

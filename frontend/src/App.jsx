@@ -20,6 +20,7 @@ import {
   fetchCategoryAnalytics,
   fetchRecurringAnalytics,
   fetchTransactions,
+  resetDatabase,
 } from './lib/api'
 
 export default function App() {
@@ -35,6 +36,19 @@ export default function App() {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [error, setError] = useState(null)
   const [uploadModalOpen, setUploadModalOpen] = useState(false)
+
+  const handleResetDatabase = async () => {
+    if (!window.confirm('Reset the demo database? This will remove all uploaded transactions, budgets, goals, and summaries.')) {
+      return
+    }
+
+    try {
+      await resetDatabase()
+      await loadDashboardData(true)
+    } catch (err) {
+      setError(err.message || 'Failed to reset the demo database.')
+    }
+  }
 
   const loadDashboardData = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) {
@@ -95,6 +109,7 @@ export default function App() {
       <Header
         onOpenUpload={() => setUploadModalOpen(true)}
         onRefresh={() => loadDashboardData(true)}
+        onResetDatabase={handleResetDatabase}
         isRefreshing={isRefreshing}
       />
 

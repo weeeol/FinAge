@@ -1,7 +1,7 @@
 import React from 'react'
-import { ShieldCheck, Upload, RefreshCw } from 'lucide-react'
+import { Database, ShieldCheck, Upload, RefreshCw } from 'lucide-react'
 
-export default function Header({ onOpenUpload, onRefresh, isRefreshing }) {
+export default function Header({ onOpenUpload, onRefresh, onResetDatabase, isRefreshing }) {
   return (
     <header className="border-b border-[#e0e5de] bg-[#fbfcf9] sticky top-0 z-40 px-6 py-3.5">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -44,6 +44,14 @@ export default function Header({ onOpenUpload, onRefresh, isRefreshing }) {
           >
             <Upload className="w-4 h-4 text-[#e8bb62]" />
             <span>Upload Statement</span>
+          </button>
+
+          <button
+            onClick={onResetDatabase}
+            className="p-2 rounded-lg border border-[#f5d5cc] bg-white text-[#c2410c] hover:bg-[#fdf2ef] transition"
+            title="Reset demo database"
+          >
+            <Database className="w-4 h-4" />
           </button>
         </div>
       </div>

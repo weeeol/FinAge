@@ -52,6 +52,35 @@ def test_init_db_seeds_default_user_and_categories(test_db_session):
     assert "Subscription" in category_names
 
 
+def test_reset_demo_data_clears_financial_records_but_preserves_reference_data(test_db_session):
+    from app.db.init_db import reset_demo_data
+
+    groceries = test_db_session.execute(select(Category).filter_by(name="Groceries")).scalar_one()
+    test_db_session.add(Transaction(
+        user_id=1,
+        category_id=groceries.id,
+        transaction_date=date(2026, 1, 15),
+        description="Test purchase",
+        amount_minor=-1200,
+        currency="USD",
+    ))
+    test_db_session.add(FinancialGoal(
+        user_id=1,
+        name="Test goal",
+        target_minor=10000,
+        current_minor=1000,
+        currency="USD",
+    ))
+    test_db_session.commit()
+
+    reset_demo_data(test_db_session)
+
+    assert test_db_session.query(Transaction).count() == 0
+    assert test_db_session.query(FinancialGoal).count() == 0
+    assert test_db_session.execute(select(User).filter_by(id=1)).scalar_one() is not None
+    assert test_db_session.execute(select(Category).filter_by(name="Groceries")).scalar_one() is not None
+
+
 def test_category_unique_name_constraint(test_db_session):
     dup = Category(name="Groceries", kind="expense")
     test_db_session.add(dup)

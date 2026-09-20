@@ -11,6 +11,10 @@ Base path: `/api`. JSON dates are `YYYY-MM-DD`; money is integer minor units. Un
 Purpose: process readiness check.
 Response: `{ "status": "ok" }`.
 
+### POST `/api/reset-database`
+Purpose: clear local demo financial data while preserving the seeded demo user and category catalog.
+Response: `{ "status": "ok", "message": "Demo financial data was reset." }`.
+
 ## Upload
 ### POST `/api/upload`
 Request: multipart form field `file`; accepted `.csv`, `.xlsx`, `.pdf`.

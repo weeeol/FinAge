@@ -9,6 +9,11 @@ from app.db.session import engine, SessionLocal
 import app.models  # Ensure all models are loaded into Base.metadata
 from app.models.user import User
 from app.models.category import Category
+from app.models.transaction import Transaction
+from app.models.recurring_payment import RecurringPayment
+from app.models.budget import Budget
+from app.models.goal import FinancialGoal
+from app.models.monthly_summary import MonthlySummary
 
 logger = logging.getLogger("finage.db")
 
@@ -86,6 +91,13 @@ def init_db(db_session: Session = None) -> None:
     finally:
         if db_session is None:
             session.close()
+
+
+def reset_demo_data(db_session: Session) -> None:
+    """Remove demo-owned financial data while preserving the user and categories."""
+    for model in (MonthlySummary, RecurringPayment, Budget, FinancialGoal, Transaction):
+        db_session.query(model).delete(synchronize_session=False)
+    db_session.commit()
 
 
 if __name__ == "__main__":

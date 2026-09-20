@@ -79,3 +79,13 @@ OCR-first document ingestion
 
 Why not:
 OCR quality and setup are unpredictable, so image-only PDFs return an explicit unsupported-format message.
+
+## Decision: Demo database reset preserves reference data
+Reason:
+The local hackathon demo needs a quick way to return to a blank state without deleting the seeded user and category catalog required by the application.
+
+Alternatives:
+Delete and recreate the entire SQLite database file.
+
+Why not:
+File deletion is less portable, can conflict with an open database, and would duplicate initialization behavior in the API layer.
