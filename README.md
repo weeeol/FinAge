@@ -4,7 +4,7 @@ FinAge is a local-first personal finance decision-support workspace. It imports 
 
 FinAge is not an investment advisor. It does not provide investment, stock, trading, or financial-product recommendations.
 
-All financial calculations are performed by the backend. Gemini receives only structured financial context and cannot change stored financial data.
+All financial calculations are performed by the backend. Amounts are stored as integer paise and displayed as Indian rupees. Gemini receives only structured financial context and cannot change stored financial data.
 
 **Live demo:** [finageai.vercel.app](https://finageai.vercel.app)
 

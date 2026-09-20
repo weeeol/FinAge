@@ -56,7 +56,7 @@ export default function GoalTracker() {
         target_minor: Math.round(Number(newTarget) * 100),
         current_minor: Math.round(Number(newCurrent) * 100),
         target_date: newDate || null,
-        currency: 'USD'
+        currency: 'INR'
       })
       
       setNewName('')
@@ -174,7 +174,7 @@ export default function GoalTracker() {
           </div>
           <div className="grid grid-cols-2 gap-3 mb-3">
             <div>
-              <label className="block text-[10px] uppercase font-bold text-[#9aa49e] mb-1">Target ($)</label>
+              <label className="block text-[10px] uppercase font-bold text-[#9aa49e] mb-1">Target (₹)</label>
               <input 
                 type="number" 
                 min="1"
@@ -187,7 +187,7 @@ export default function GoalTracker() {
               />
             </div>
             <div>
-              <label className="block text-[10px] uppercase font-bold text-[#9aa49e] mb-1">Saved ($)</label>
+              <label className="block text-[10px] uppercase font-bold text-[#9aa49e] mb-1">Saved (₹)</label>
               <input 
                 type="number" 
                 min="0"

@@ -40,7 +40,7 @@ def test_init_db_seeds_default_user_and_categories(test_db_session):
     user = test_db_session.execute(select(User).filter_by(id=1)).scalar_one_or_none()
     assert user is not None
     assert user.name == "Demo User"
-    assert user.currency == "USD"
+    assert user.currency == "INR"
 
     # Verify categories were seeded
     categories = test_db_session.execute(select(Category)).scalars().all()

@@ -134,7 +134,7 @@ def parse_statement_file(content: bytes, filename: str) -> Tuple[List[Normalized
                 transaction_date=txn_date,
                 description=raw_desc,
                 amount_minor=amount_minor,
-                currency="USD",
+                currency="INR",
                 source_file=filename,
                 category_name=assigned_category,
             )

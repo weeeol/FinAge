@@ -24,4 +24,4 @@ class TransactionSummaryResponse(BaseModel):
     expense_minor: int = Field(..., description="Total expense in minor units (positive)")
     net_minor: int = Field(..., description="Net balance in minor units (income - expense)")
     transaction_count: int = Field(..., description="Total number of transactions in period")
-    currency: str = "USD"
+    currency: str = "INR"

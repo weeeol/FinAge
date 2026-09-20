@@ -47,7 +47,7 @@ export default function BudgetTracker() {
         category: newCategory,
         month: selectedMonth,
         limit_minor: Math.round(Number(newLimit) * 100),
-        currency: 'USD'
+        currency: 'INR'
       })
       
       setNewLimit('')
@@ -178,7 +178,7 @@ export default function BudgetTracker() {
               </select>
             </div>
             <div>
-              <label className="block text-[10px] uppercase font-bold text-[#9aa49e] mb-1">Limit ($)</label>
+              <label className="block text-[10px] uppercase font-bold text-[#9aa49e] mb-1">Limit (₹)</label>
               <input 
                 type="number" 
                 min="1"

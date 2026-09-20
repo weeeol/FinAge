@@ -66,11 +66,14 @@ def init_db(db_session: Session = None) -> None:
                 id=1,
                 name="Demo User",
                 email="demo@finage.local",
-                currency="USD",
+                currency="INR",
             )
             session.add(demo_user)
             session.commit()
             logger.info("Seeded default demo user (id=1)")
+        elif demo_user.currency != "INR":
+            demo_user.currency = "INR"
+            session.commit()
 
         # Seed default categories if not present
         existing_categories = {c.name: c for c in session.execute(select(Category)).scalars().all()}

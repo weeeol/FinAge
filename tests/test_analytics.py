@@ -72,7 +72,7 @@ def test_transactions_summary_empty_db(client):
     assert data["expense_minor"] == 0
     assert data["net_minor"] == 0
     assert data["transaction_count"] == 0
-    assert data["currency"] == "USD"
+    assert data["currency"] == "INR"
 
 
 def test_transactions_list_and_summary_with_data(client, db_session):

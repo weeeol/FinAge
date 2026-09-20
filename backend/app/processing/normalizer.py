@@ -10,7 +10,7 @@ class NormalizedTransaction:
     transaction_date: date
     description: str
     amount_minor: int  # positive = income, negative = expense
-    currency: str = "USD"
+    currency: str = "INR"
     source_file: Optional[str] = None
     external_id: Optional[str] = None
     category_name: Optional[str] = None

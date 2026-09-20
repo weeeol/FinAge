@@ -15,7 +15,7 @@ class Transaction(Base):
     transaction_date: Mapped[date] = mapped_column(Date, nullable=False)
     description: Mapped[str] = mapped_column(String, nullable=False)
     amount_minor: Mapped[int] = mapped_column(Integer, nullable=False)  # positive income, negative expense
-    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="INR")
     source_file: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     external_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     is_recurring_candidate: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)

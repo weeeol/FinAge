@@ -7,7 +7,7 @@ class GoalCreate(BaseModel):
     target_minor: int = Field(..., gt=0)
     current_minor: int = Field(0, ge=0)
     target_date: Optional[date] = None
-    currency: str = "USD"
+    currency: str = "INR"
 
 class GoalResponse(BaseModel):
     id: int

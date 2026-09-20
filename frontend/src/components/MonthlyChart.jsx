@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'recharts'
 import { Calendar } from 'lucide-react'
+import { formatMoney } from '../lib/api'
 
 export default function MonthlyChart({ data = [] }) {
   if (!data || data.length === 0) {
@@ -45,7 +46,7 @@ export default function MonthlyChart({ data = [] }) {
                 {entry.name}:
               </span>
               <span className="font-semibold text-[#1f2724]">
-                ${entry.value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                {formatMoney(entry.value * 100)}
               </span>
             </div>
           ))}
@@ -73,7 +74,7 @@ export default function MonthlyChart({ data = [] }) {
               stroke="#78827c"
               fontSize={11}
               tickLine={false}
-              tickFormatter={(v) => `$${v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v}`}
+              tickFormatter={(v) => formatMoney(v * 100)}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend wrapperStyle={{ fontSize: 12, paddingTop: 12 }} />

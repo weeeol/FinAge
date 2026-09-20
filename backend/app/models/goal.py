@@ -15,7 +15,7 @@ class FinancialGoal(Base):
     target_minor: Mapped[int] = mapped_column(Integer, nullable=False)
     current_minor: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     target_date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
-    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="INR")
     created_at: Mapped[datetime] = mapped_column(
         DateTime, nullable=False, default=lambda: datetime.now(timezone.utc)
     )

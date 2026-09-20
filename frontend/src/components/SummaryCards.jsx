@@ -7,7 +7,7 @@ export default function SummaryCards({ summary, isLoading }) {
   const expense = summary?.expense_minor ?? 0
   const net = summary?.net_minor ?? 0
   const count = summary?.transaction_count ?? 0
-  const currency = summary?.currency ?? 'USD'
+  const currency = summary?.currency ?? 'INR'
 
   const isNetPositive = net >= 0
 

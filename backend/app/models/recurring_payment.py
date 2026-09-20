@@ -14,7 +14,7 @@ class RecurringPayment(Base):
     category_id: Mapped[Optional[int]] = mapped_column(ForeignKey("categories.id", ondelete="SET NULL"), nullable=True)
     merchant_name: Mapped[str] = mapped_column(String, nullable=False)
     typical_amount_minor: Mapped[int] = mapped_column(Integer, nullable=False)
-    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="USD")
+    currency: Mapped[str] = mapped_column(String(3), nullable=False, default="INR")
     frequency: Mapped[str] = mapped_column(String, nullable=False, default="monthly")  # weekly|monthly|annual|unknown
     next_expected_date: Mapped[Optional[date]] = mapped_column(Date, nullable=True)
     confidence: Mapped[float] = mapped_column(Float, nullable=False, default=1.0)

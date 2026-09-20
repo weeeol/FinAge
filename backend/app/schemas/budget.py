@@ -6,7 +6,7 @@ class BudgetCreate(BaseModel):
     category: str
     month: str = Field(..., pattern=r"^\d{4}-\d{2}$")
     limit_minor: int = Field(..., ge=0)
-    currency: str = "USD"
+    currency: str = "INR"
 
 class BudgetResponse(BaseModel):
     id: int

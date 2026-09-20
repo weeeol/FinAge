@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from 'recharts'
 import { PieChart as PieIcon } from 'lucide-react'
+import { formatMoney } from '../lib/api'
 
 // FinAge harmonious editorial palette
 const FINAGE_PALETTE = [
@@ -49,7 +50,7 @@ export default function CategoryPieChart({ data = [] }) {
         <div className="rounded-lg border border-[#e0e5de] bg-white p-2.5 shadow-md text-xs space-y-1">
           <p className="font-serif font-bold text-[#1f2724]">{entry.name}</p>
           <p className="text-[#78827c]">
-            ${entry.value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{' '}
+            {formatMoney(entry.value * 100)}{' '}
             <span className="font-medium text-[#1f2724]">({entry.share}%)</span>
           </p>
         </div>
@@ -97,7 +98,7 @@ export default function CategoryPieChart({ data = [] }) {
                 <span className="text-[#1f2724] truncate font-medium">{item.name}</span>
               </div>
               <div className="flex items-center gap-3 shrink-0">
-                <span className="font-semibold text-[#1f2724]">${item.value.toFixed(0)}</span>
+                <span className="font-semibold text-[#1f2724]">{formatMoney(item.value * 100)}</span>
                 <span className="text-[#78827c] w-10 text-right">{item.share}%</span>
               </div>
             </div>

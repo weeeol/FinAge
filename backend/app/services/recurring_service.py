@@ -179,7 +179,7 @@ class RecurringService:
                         category_id=cat_id,
                         merchant_name=merchant,
                         typical_amount_minor=median_amount,
-                        currency="USD",
+                        currency="INR",
                         frequency=frequency,
                         next_expected_date=next_date,
                         confidence=confidence,

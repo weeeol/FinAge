@@ -8,12 +8,12 @@ function apiUrl(path) {
   return `${API_BASE_URL}${path}`
 }
 
-export function formatMoney(minorUnits = 0, currency = 'USD') {
+export function formatMoney(minorUnits = 0, currency = 'INR') {
   const isNegative = minorUnits < 0
   const abs = Math.abs(minorUnits) / 100
-  const formatted = new Intl.NumberFormat('en-US', {
+  const formatted = new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: currency || 'USD',
+    currency: currency || 'INR',
   }).format(abs)
 
   return isNegative ? `-${formatted}` : formatted

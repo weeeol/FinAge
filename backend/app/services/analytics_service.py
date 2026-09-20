@@ -111,7 +111,7 @@ class AnalyticsService:
             expense_minor=expense_minor,
             net_minor=net_minor,
             transaction_count=len(txns),
-            currency="USD",
+            currency="INR",
         )
 
     def get_monthly_analytics(
