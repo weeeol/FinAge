@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from sqlalchemy.orm import Session
 
-from app.ai.openai_adapter import AIUnavailableError, OpenAIAdapter
+from app.ai.gemini_adapter import AIUnavailableError, GeminiAdapter
 from app.schemas.assistant import AssistantAnswer, AssistantSource
 from app.services.analytics_service import AnalyticsService
 from app.services.recurring_service import RecurringService
@@ -26,7 +26,7 @@ class QAService:
             raise ValueError("Question cannot be empty.")
 
         context, sources = self._build_context(user_id, from_date, to_date)
-        answer = OpenAIAdapter().answer(normalized_question, context)
+        answer = GeminiAdapter().answer(normalized_question, context)
         return AssistantAnswer(answer=answer, sources=sources)
 
     def _build_context(

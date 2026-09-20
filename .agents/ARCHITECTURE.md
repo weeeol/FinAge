@@ -1,7 +1,8 @@
 # FinAge Architecture
 
 ## 1. System overview
-FinAge is a single-user, local-first personal finance decision-support MVP. A React/Vite frontend calls one FastAPI application. The backend extracts and normalizes uploaded records, stores structured data in SQLite, performs deterministic analytics, and optionally asks OpenAI to explain those results. The product does not provide investment, stock, trading, or financial-product recommendations.
+FinAge is a single-user, local-first personal finance decision-support MVP. A React/Vite frontend calls one FastAPI application. The backend extracts and normalizes uploaded records, stores structured data in SQLite, performs deterministic analytics, and optionally asks Gemini to explain those results. The product does not provide investment, stock, trading, or financial-product recommendations.
+- **AI adapter:** Gemini client behind a small service boundary. It receives a compact structured financial context, not raw documents.
 
 Primary flow:
 
@@ -40,7 +41,8 @@ Suggested modules: `app/main.py`, `app/api/`, `app/core/`, `app/db/`, `app/model
 OCR is out of scope for the initial MVP. Unsupported or image-only PDFs should produce a clear actionable error.
 
 ## 6. AI architecture
-The AI adapter accepts a structured context containing selected date range, aggregates, transaction excerpts, recurring items, budgets, goals, and user question. Prompts require the model to use only supplied data, state when data is insufficient, avoid investment advice, and return a bounded response. The service must never let model output alter persisted financial values. OpenAI is optional: deterministic dashboard features must work without an API key, while AI endpoints return a controlled unavailable response when it is absent.
+	The AI adapter accepts a structured context containing selected date range, aggregates, transaction excerpts, recurring items, budgets, goals, and user question. Prompts require the model to use only supplied data, state when data is insufficient, avoid investment advice, and return a bounded response. The service must never let model output alter persisted financial values. Gemini is optional: deterministic dashboard features must work without an API key, while AI endpoints return a controlled unavailable response when it is absent.
+- Keep `GEMINI_API_KEY` in environment variables and exclude `.env` files.
 
 ## 7. Database architecture
 SQLite is the MVP database. SQLAlchemy manages schema access; use a lightweight initialization path for the demo. Store money as integer minor units (for example cents) plus an ISO currency code to avoid floating-point arithmetic. Dates are timezone-naive ISO dates for statement-level data. A single default user is sufficient for the demo, but records retain `user_id` for clean extension later.

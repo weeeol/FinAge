@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
-from app.ai.openai_adapter import AIUnavailableError
+from app.ai.gemini_adapter import AIUnavailableError
 from app.db.session import get_db
 from app.schemas.assistant import AssistantAnswer, AssistantQuestion
 from app.services.qa_service import QAService

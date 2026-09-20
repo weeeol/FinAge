@@ -63,7 +63,7 @@ The previous implementation run completed the main P0-07 data-backed dashboard a
 - **Implementation sequence:**
 	1. Build a bounded context DTO from existing summary, monthly, category, recurring, and transaction services; do not pass uploaded files or unrestricted database dumps to the model.
 	2. Add Pydantic request/response schemas matching `API_CONTRACT.md` and a thin `/api/ask` route.
-	3. Add an OpenAI adapter behind a service boundary. If `OPENAI_API_KEY` is absent, return the documented `503 ai_unavailable` response without breaking the dashboard.
+	3. Add a Gemini adapter behind a service boundary. If `GEMINI_API_KEY` is absent, return the documented `503 ai_unavailable` response without breaking the dashboard.
 	4. Add mocked tests for grounding, insufficient data, refusal of investment questions, malformed provider output, and no-key behavior.
 	5. Add the smallest useful assistant panel to the existing FinAge UI; preserve current loading/error/refresh/upload flows.
 

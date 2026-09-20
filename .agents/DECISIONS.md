@@ -61,6 +61,16 @@ Why not:
 Authentication adds setup and security surface; user-owned foreign keys preserve a future migration path.
 
 ## Decision: CSV/XLSX first, text PDF second
+
+## Decision: Gemini for grounded AI explanations
+Reason:
+Gemini provides the optional natural-language explanation layer while preserving the existing provider boundary and `/api/ask` contract.
+
+Alternatives:
+OpenAI API
+
+Why not:
+The project now uses Gemini credentials and models for the hackathon demo; deterministic analytics remain independent of the provider.
 Reason:
 Tabular files provide the most reliable one-day import path; PyMuPDF can support text-based statements with bounded effort.
 
