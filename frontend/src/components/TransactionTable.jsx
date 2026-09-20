@@ -75,18 +75,18 @@ export default function TransactionTable({
                     <td className="py-3 px-6 text-[#78827c] whitespace-nowrap font-mono text-[11px]">
                       {txn.date}
                     </td>
-                    <td className="py-3 px-6 font-medium text-[#1f2724] max-w-xs truncate">
+                    <td className="py-3 px-6 font-medium text-[#1f2724] max-w-[200px] truncate">
                       <div className="flex items-center gap-2.5">
                         <span className={`h-6 w-6 rounded-md flex items-center justify-center shrink-0 ${
                           isIncome ? 'bg-[#f1f7f4] text-[#15803d]' : 'bg-[#fdf2ef] text-[#c2410c]'
                         }`}>
                           {isIncome ? <ArrowDownLeft className="w-3.5 h-3.5" /> : <ArrowUpRight className="w-3.5 h-3.5" />}
                         </span>
-                        <span className="truncate">{txn.description}</span>
+                        <span className="truncate block max-w-full">{txn.description}</span>
                       </div>
                     </td>
-                    <td className="py-3 px-6 whitespace-nowrap">
-                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#f5f6f2] border border-[#e0e5de] text-[#526057]">
+                    <td className="py-3 px-6 whitespace-nowrap max-w-[200px] truncate">
+                      <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-[#f5f6f2] border border-[#e0e5de] text-[#526057] max-w-full truncate align-bottom">
                         {txn.category || 'Other'}
                       </span>
                     </td>

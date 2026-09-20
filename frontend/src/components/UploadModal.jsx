@@ -76,7 +76,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
         <div className="flex items-center justify-between pb-4 border-b border-[#e0e5de]">
           <div>
             <h3 className="font-serif text-lg font-bold text-[#1f2724]">Upload Statement</h3>
-            <p className="text-xs text-[#78827c] mt-0.5">Ingest CSV or Excel (.xlsx) financial records</p>
+            <p className="text-xs text-[#78827c] mt-0.5">Ingest CSV, Excel, or PDF financial records</p>
           </div>
           <button
             onClick={onClose}
@@ -106,7 +106,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
                 <input
                   ref={inputRef}
                   type="file"
-                  accept=".csv,.xlsx,.xls"
+                  accept=".csv,.xlsx,.xls,.pdf,application/pdf"
                   onChange={handleChange}
                   className="hidden"
                 />
@@ -119,7 +119,7 @@ export default function UploadModal({ isOpen, onClose, onUploadSuccess }) {
                 <p className="text-xs text-[#78827c] mt-1">
                   {selectedFile
                     ? `${(selectedFile.size / 1024).toFixed(1)} KB`
-                    : 'CSV, XLSX up to 10MB • Columns auto-detected'}
+                    : 'CSV, XLSX, PDF up to 10MB • Columns auto-detected'}
                 </p>
               </div>
 

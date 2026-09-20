@@ -10,6 +10,10 @@ import TransactionTable from './components/TransactionTable'
 import UploadModal from './components/UploadModal'
 import AssistantPanel from './components/AssistantPanel'
 
+import MonthlySummary from './components/MonthlySummary'
+import BudgetTracker from './components/BudgetTracker'
+import GoalTracker from './components/GoalTracker'
+
 import {
   fetchSummary,
   fetchMonthlyAnalytics,
@@ -128,6 +132,8 @@ export default function App() {
           </div>
         )}
 
+        <MonthlySummary currentMonth="2026-01" />
+
         {/* Top Metric Snapshot Cards */}
         <SummaryCards summary={summary} isLoading={isLoading} />
 
@@ -141,10 +147,12 @@ export default function App() {
           </div>
         </div>
 
-        {/* Row 2: Recurring Obligations & Transaction Ledger */}
+        {/* Row 2: Recurring Obligations, Budgets, Goals & Transaction Ledger */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 flex flex-col gap-6">
             <RecurringList data={recurringData} />
+            <BudgetTracker />
+            <GoalTracker />
           </div>
           <div className="lg:col-span-2">
             <TransactionTable

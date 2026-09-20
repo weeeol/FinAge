@@ -8,8 +8,10 @@ from app.schemas.analytics import (
     CategoryAnalyticsResponse,
     RecurringAnalyticsResponse,
 )
+from app.schemas.budget import BudgetStatusList
 from app.services.analytics_service import AnalyticsService
 from app.services.recurring_service import RecurringService
+from app.services.budget_service import BudgetService
 
 router = APIRouter(prefix="/analytics", tags=["Analytics"])
 
@@ -38,4 +40,13 @@ def get_recurring_analytics(
 ):
     service = RecurringService(db)
     return service.detect_and_sync_recurring(user_id=1)
+
+
+@router.get("/budgets", response_model=BudgetStatusList)
+def get_budgets_analytics(
+    month: Optional[str] = Query(None, description="Month in YYYY-MM format"),
+    db: Session = Depends(get_db),
+):
+    service = BudgetService(db)
+    return service.get_budget_status(user_id=1, month=month)
 

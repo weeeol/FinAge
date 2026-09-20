@@ -81,6 +81,7 @@ h3 { font-size: 14px; margin-bottom: 5px; }
 .mini-bars.coral i { background: #eaa189; }
 .content-grid, .bottom-grid { display: grid; gap: 14px; grid-template-columns: 1.45fr 1fr; margin-bottom: 14px; }
 .panel { padding: 20px 21px; }
+.budget-goal-card { background: #fff; }
 .panel-header { align-items: flex-start; margin-bottom: 20px; }
 .panel-header .muted { margin-bottom: 0; }
 .chart-area { display: flex; gap: 11px; height: 168px; }

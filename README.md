@@ -21,7 +21,7 @@ This repository currently contains the project foundation and architecture docum
 - Backend: Python, FastAPI, Pydantic, SQLAlchemy
 - Data: SQLite and Pandas
 - Documents: PyMuPDF for text PDFs, CSV/XLSX parsing through Pandas
-- AI: OpenAI API behind a grounded adapter
+- AI: Gemini API behind a grounded adapter
 - Tests: Pytest and focused frontend smoke tests
 
 ## Local setup

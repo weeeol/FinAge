@@ -90,3 +90,45 @@ export async function askFinAge(question, fromDate = null, toDate = null) {
     }),
   })
 }
+
+export async function fetchBudgets(month = null) {
+  const qs = month ? `?month=${month}` : ''
+  return request(`/api/analytics/budgets${qs}`)
+}
+
+export async function createBudget(budgetData) {
+  return request('/api/budgets', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(budgetData),
+  })
+}
+
+export async function deleteBudget(budgetId) {
+  return request(`/api/budgets/${budgetId}`, {
+    method: 'DELETE',
+  })
+}
+
+export async function fetchGoals() {
+  return request('/api/goals')
+}
+
+export async function createGoal(goalData) {
+  return request('/api/goals', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(goalData),
+  })
+}
+
+export async function deleteGoal(goalId) {
+  return request(`/api/goals/${goalId}`, {
+    method: 'DELETE',
+  })
+}
+
+export async function fetchMonthlySummary(month) {
+  const qs = month ? `?month=${month}` : ''
+  return request(`/api/monthly-summary${qs}`)
+}

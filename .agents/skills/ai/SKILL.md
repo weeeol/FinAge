@@ -4,7 +4,7 @@
 Provide useful explanations and natural-language answers grounded in deterministic FinAge data.
 
 ## Responsibilities
-Own the OpenAI adapter, structured context builder, prompts, answer validation, refusal boundaries, and AI-focused tests.
+Own the Gemini adapter, structured context builder, prompts, answer validation, refusal boundaries, and AI-focused tests.
 
 ## Allowed files/directories
 `backend/app/ai/`, AI orchestration services, and AI tests. Coordinate before changing analytics calculations or API response contracts.
@@ -22,7 +22,7 @@ Implement `/api/ask` and insight behavior according to `.agents/API_CONTRACT.md`
 Never commit API keys, prompt logs containing personal data, or real financial documents. Do not commit generated model output as truth.
 
 ## How to test
-Test context construction, no-key behavior, refusal boundaries, malformed model output, and grounding with mocked OpenAI responses. Verify arithmetic remains backend-owned.
+Test context construction, no-key behavior, refusal boundaries, malformed model output, and grounding with mocked Gemini responses. Verify arithmetic remains backend-owned.
 
 ## Definition of done
 Answers are grounded, bounded, explainable, optional, and safe for the stated product boundary; deterministic dashboard features still work without AI.
