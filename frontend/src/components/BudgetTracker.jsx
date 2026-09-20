@@ -102,7 +102,9 @@ export default function BudgetTracker() {
 
       <div className="category-list">
         {budgets.length === 0 && !isLoading && !error && (
-          <p className="text-xs text-[#78827c] py-4 text-center">No budgets set for this month.</p>
+          <div className="py-8 flex flex-col items-center justify-center text-center">
+            <p className="text-xs text-[#78827c]">No budgets set for this month.</p>
+          </div>
         )}
         
         {budgets.map((b) => (
@@ -116,7 +118,9 @@ export default function BudgetTracker() {
             </div>
             <div className="text-[10px] text-[#9aa49e] mt-1 flex justify-between">
               <span>{Math.round(b.percent_used * 100)}% used</span>
-              <span>{b.remaining_minor >= 0 ? `${formatMoney(b.remaining_minor)} remaining` : `${formatMoney(Math.abs(b.remaining_minor))} over limit`}</span>
+              <span className={b.remaining_minor < 0 ? "text-[#c05346] font-semibold" : ""}>
+                {b.remaining_minor >= 0 ? `${formatMoney(b.remaining_minor)} remaining` : `${formatMoney(Math.abs(b.remaining_minor))} over limit`}
+              </span>
             </div>
           </div>
         ))}
