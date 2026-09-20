@@ -2,6 +2,12 @@
  * API client and utilities for FinAge
  */
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+
+function apiUrl(path) {
+  return `${API_BASE_URL}${path}`
+}
+
 export function formatMoney(minorUnits = 0, currency = 'USD') {
   const isNegative = minorUnits < 0
   const abs = Math.abs(minorUnits) / 100
@@ -14,7 +20,7 @@ export function formatMoney(minorUnits = 0, currency = 'USD') {
 }
 
 async function request(url, options = {}) {
-  const res = await fetch(url, options)
+  const res = await fetch(apiUrl(url), options)
   const data = await res.json().catch(() => ({}))
 
   if (!res.ok) {
@@ -61,7 +67,7 @@ export async function uploadFile(file) {
   const formData = new FormData()
   formData.append('file', file)
 
-  const res = await fetch('/api/upload', {
+  const res = await fetch(apiUrl('/api/upload'), {
     method: 'POST',
     body: formData,
   })
