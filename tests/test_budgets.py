@@ -68,3 +68,22 @@ def test_get_budget_status(client: TestClient, db_session):
     assert budget_status["remaining_minor"] == 5000
     assert budget_status["percent_used"] == 0.75
     assert budget_status["status"] == "on_track"
+
+
+def test_delete_budget(client: TestClient):
+    response = client.post("/api/budgets", json={
+        "category": "Travel",
+        "month": "2026-09",
+        "limit_minor": 30000,
+        "currency": "USD"
+    })
+    budget_id = response.json()["id"]
+
+    delete_response = client.delete(f"/api/budgets/{budget_id}")
+    assert delete_response.status_code == 200
+    assert delete_response.json()["deleted"] is True
+    assert delete_response.json()["id"] == budget_id
+
+    follow_up = client.get("/api/analytics/budgets?month=2026-09")
+    assert follow_up.status_code == 200
+    assert all(item["budget_id"] != budget_id for item in follow_up.json()["items"])

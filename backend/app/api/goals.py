@@ -29,3 +29,9 @@ def get_goals(db: Session = Depends(get_db)):
     service = GoalService(db)
     goals = service.get_goals(user_id=1)
     return GoalList(items=goals)
+
+@router.delete("/{goal_id}")
+def delete_goal(goal_id: int, db: Session = Depends(get_db)):
+    service = GoalService(db)
+    deleted_id = service.delete_goal(user_id=1, goal_id=goal_id)
+    return {"deleted": True, "id": deleted_id}

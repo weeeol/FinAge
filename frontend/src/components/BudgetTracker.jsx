@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Plus, AlertCircle, RefreshCw } from 'lucide-react'
-import { fetchBudgets, createBudget, formatMoney } from '../lib/api'
+import { fetchBudgets, createBudget, deleteBudget, formatMoney } from '../lib/api'
 
 export default function BudgetTracker() {
   const [budgets, setBudgets] = useState([])
@@ -52,7 +52,7 @@ export default function BudgetTracker() {
       
       setNewLimit('')
       setShowForm(false)
-      loadBudgets()
+      await loadBudgets()
     } catch (err) {
       if (err.details?.code === 'duplicate_budget' || err.message.includes('already exists')) {
         setFormError(`A budget for ${newCategory} already exists this month.`)
@@ -74,7 +74,7 @@ export default function BudgetTracker() {
   }
 
   return (
-    <div className="panel obligations">
+    <div className="panel budget-goal-card obligations bg-white border border-[#e0e5de] rounded-xl shadow-sm">
       <div className="panel-header">
         <div>
           <h2>Monthly Budgets</h2>
@@ -121,6 +121,22 @@ export default function BudgetTracker() {
               <span className={b.remaining_minor < 0 ? "text-[#c05346] font-semibold" : ""}>
                 {b.remaining_minor >= 0 ? `${formatMoney(b.remaining_minor)} remaining` : `${formatMoney(Math.abs(b.remaining_minor))} over limit`}
               </span>
+            </div>
+            <div className="flex justify-end mt-2">
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await deleteBudget(b.budget_id)
+                    await loadBudgets()
+                  } catch (err) {
+                    setError(err.message || 'Failed to remove budget.')
+                  }
+                }}
+                className="px-2 py-1 text-[10px] font-semibold text-[#c2410c] hover:bg-[#fdf2ef] rounded border border-[#f5d5cc]"
+              >
+                Remove
+              </button>
             </div>
           </div>
         ))}
@@ -187,7 +203,7 @@ export default function BudgetTracker() {
             <button 
               type="submit" 
               disabled={isCreating}
-              className="primary-button !py-1.5 !px-3 disabled:opacity-50"
+              className="primary-button !py-1.5 !px-3 !text-black disabled:opacity-50"
             >
               {isCreating ? 'Saving...' : 'Save Budget'}
             </button>

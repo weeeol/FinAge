@@ -39,3 +39,23 @@ def test_get_goals(client: TestClient):
     goal = next(g for g in data["items"] if g["name"] == "Emergency Fund")
     assert goal["progress"] == 0.25
     assert goal["target_minor"] == 1000000
+
+
+def test_delete_goal(client: TestClient):
+    response = client.post("/api/goals", json={
+        "name": "Trip Fund",
+        "target_minor": 200000,
+        "current_minor": 50000,
+        "target_date": "2027-06-30",
+        "currency": "USD"
+    })
+    goal_id = response.json()["id"]
+
+    delete_response = client.delete(f"/api/goals/{goal_id}")
+    assert delete_response.status_code == 200
+    assert delete_response.json()["deleted"] is True
+    assert delete_response.json()["id"] == goal_id
+
+    list_response = client.get("/api/goals")
+    assert list_response.status_code == 200
+    assert all(item["id"] != goal_id for item in list_response.json()["items"])

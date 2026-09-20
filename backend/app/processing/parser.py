@@ -50,13 +50,15 @@ def parse_statement_file(content: bytes, filename: str) -> Tuple[List[Normalized
         from app.services.pdf_parser import parse_pdf_statement
         try:
             df = parse_pdf_statement(content)
+        except ValueError:
+            raise
         except Exception as e:
             raise ValueError(f"Unable to read PDF file: {str(e)}")
     else:
         raise ValueError(f"Unsupported file format for: {filename}. Expected .csv, .xlsx, or .pdf.")
 
-    if df.empty:
-        return [], ["File contains no data rows."]
+    if df is None or df.empty:
+        raise ValueError("PDF contains no readable transaction data.")
 
     # Detect mapped columns
     col_names = [str(c) for c in df.columns]

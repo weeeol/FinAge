@@ -104,6 +104,12 @@ export async function createBudget(budgetData) {
   })
 }
 
+export async function deleteBudget(budgetId) {
+  return request(`/api/budgets/${budgetId}`, {
+    method: 'DELETE',
+  })
+}
+
 export async function fetchGoals() {
   return request('/api/goals')
 }
@@ -113,6 +119,12 @@ export async function createGoal(goalData) {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(goalData),
+  })
+}
+
+export async function deleteGoal(goalId) {
+  return request(`/api/goals/${goalId}`, {
+    method: 'DELETE',
   })
 }
 

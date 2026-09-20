@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Plus, AlertCircle, RefreshCw } from 'lucide-react'
-import { fetchGoals, createGoal, formatMoney } from '../lib/api'
+import { fetchGoals, createGoal, deleteGoal, formatMoney } from '../lib/api'
 
 export default function GoalTracker() {
   const [goals, setGoals] = useState([])
@@ -64,7 +64,7 @@ export default function GoalTracker() {
       setNewCurrent('0')
       setNewDate('')
       setShowForm(false)
-      loadGoals()
+      await loadGoals()
     } catch (err) {
       setFormError(err.message || 'Failed to create goal.')
     } finally {
@@ -73,7 +73,7 @@ export default function GoalTracker() {
   }
 
   return (
-    <div className="panel obligations">
+    <div className="panel budget-goal-card obligations bg-white border border-[#e0e5de] rounded-xl shadow-sm">
       <div className="panel-header mb-2">
         <div>
           <h2>Financial Goals</h2>
@@ -121,6 +121,22 @@ export default function GoalTracker() {
                   {g.target_date && ` by ${g.target_date}`}
                 </span>
               )}
+            </div>
+            <div className="flex justify-end mt-2">
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await deleteGoal(g.id)
+                    await loadGoals()
+                  } catch (err) {
+                    setError(err.message || 'Failed to remove goal.')
+                  }
+                }}
+                className="px-2 py-1 text-[10px] font-semibold text-[#c2410c] hover:bg-[#fdf2ef] rounded border border-[#f5d5cc]"
+              >
+                Remove
+              </button>
             </div>
           </div>
         ))}
@@ -204,7 +220,7 @@ export default function GoalTracker() {
             <button 
               type="submit" 
               disabled={isCreating}
-              className="primary-button !py-1.5 !px-3 disabled:opacity-50"
+              className="primary-button !py-1.5 !px-3 !text-black disabled:opacity-50"
             >
               {isCreating ? 'Saving...' : 'Save Goal'}
             </button>

@@ -45,6 +45,17 @@ class BudgetService:
 
         return budget
 
+    def delete_budget(self, user_id: int, budget_id: int) -> int:
+        budget = self.db.query(Budget).filter(Budget.user_id == user_id, Budget.id == budget_id).first()
+        if not budget:
+            exc = HTTPException(status_code=404, detail="Budget not found.")
+            exc.code = "budget_not_found"
+            raise exc
+
+        self.db.delete(budget)
+        self.db.commit()
+        return budget_id
+
     def get_budget_status(self, user_id: int, month: Optional[str] = None) -> BudgetStatusList:
         query = self.db.query(Budget).filter(Budget.user_id == user_id)
         if month:

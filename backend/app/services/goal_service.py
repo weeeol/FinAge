@@ -27,6 +27,17 @@ class GoalService:
         self.db.refresh(goal)
         return goal
 
+    def delete_goal(self, user_id: int, goal_id: int) -> int:
+        goal = self.db.query(FinancialGoal).filter(FinancialGoal.user_id == user_id, FinancialGoal.id == goal_id).first()
+        if not goal:
+            exc = HTTPException(status_code=404, detail="Goal not found.")
+            exc.code = "goal_not_found"
+            raise exc
+
+        self.db.delete(goal)
+        self.db.commit()
+        return goal_id
+
     def get_goals(self, user_id: int) -> List[dict]:
         goals = self.db.query(FinancialGoal).filter(FinancialGoal.user_id == user_id).all()
         result = []
