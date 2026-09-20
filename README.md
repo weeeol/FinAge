@@ -6,6 +6,8 @@ FinAge is not an investment advisor. It does not provide investment, stock, trad
 
 All financial calculations are performed by the backend. Gemini receives only structured financial context and cannot change stored financial data.
 
+**Live demo:** [finageai.vercel.app](https://finageai.vercel.app)
+
 ## Features
 
 - CSV, XLSX, and text-based PDF statement import
