@@ -36,6 +36,7 @@ export default function App() {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [error, setError] = useState(null)
   const [uploadModalOpen, setUploadModalOpen] = useState(false)
+  const [showStartupNotice, setShowStartupNotice] = useState(true)
 
   const handleResetDatabase = async () => {
     if (!window.confirm('Reset the demo database? This will remove all uploaded transactions, budgets, goals, and summaries.')) {
@@ -105,6 +106,31 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#faf9f5] text-[#1f2724] flex flex-col antialiased">
+      {showStartupNotice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1f2724]/25 px-5 backdrop-blur-[2px]">
+          <div className="w-full max-w-md rounded-xl border border-[#e0e5de] bg-white p-6 shadow-xl">
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#f7f5ed] text-[#b45309]">
+                <AlertCircle className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className="font-serif text-xl font-normal text-[#1f2724]">Starting FinAge</h2>
+                <p className="mt-2 text-sm leading-6 text-[#526057]">
+                  The demo backend may need up to a minute to spin up after being idle. Please keep this page open while your financial data loads.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowStartupNotice(false)}
+              className="mt-5 w-full rounded-lg bg-[#1f2724] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2d3834]"
+            >
+              Continue to FinAge
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Top Header */}
       <Header
         onOpenUpload={() => setUploadModalOpen(true)}
